@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>get & post</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.4/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4"
+        crossorigin="anonymous"></script>
+    <style>
+        body {
+            margin: 100px 100px;
+        }
+
+        .put-data {
+            margin-top: 100px;
+        }
+
+        form#form {
+            margin-top: 100px;
+        }
+
+        table,
+        td,
+        th {
+            border: 1px solid #ddd;
+            text-align: left;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        th,
+        td {
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1 class="text-warning mb-3">{JSON} Placeholder Requests</h1>
+    <div class="container">
+        <div class="row">
+            <div class="col-10 mx-auto ">
+                <div class="tab mb-4">
+                    <button class="tablinks btn btn-primary" onclick="openCity(event, 'London')">GET </button>
+                    <button class="tablinks btn btn-success" onclick="openCity(event, 'Paris')">POST</button>
+                    <button class="tablinks btn btn-danger" onclick="openCity(event, 'Tokyo')">PUT</button>
+                    <button class="tablinks btn btn-warning" onclick="openCity(event, 'patch')">PATCH</button>
+                    <button class="tablinks btn btn-info" onclick="openCity(event, 'delete')">DELETE</button>
+                </div>
+
+                <div id="London" class="tabcontent">
+                    <div class="container ">
+                        <div class="row justify-content-center ">
+                            <div class="message-get mt-3 alert alert-success" style="display: none;"></div>
+
+                            <div class="col-12 mx-auto bg-light">
+                                <h2 class="text-success mb-4 mt-4">GET REQUEST</h2>
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">ID</th>
+                                            <th scope="col">Title</th>
+                                            <th scope="col">Body</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="data"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div id="Paris" class="tabcontent">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-6 ">
+                                <div class="message-post mt-3 alert alert-success" style="display: none;"></div>
+                                <form id="form">
+                                    <h2 class="text-success">POST REQUEST</h2>
+                                    <div class="mb-3 bg-light">
+                                        <label for="exampleInputEmail1" class="form-label bg-light">Title</label>
+                                        <input type="text" class="form-control bg-light" id="title"
+                                            aria-describedby="emailHelp">
+
+                                    </div>
+                                    <div class="mb-3 bg-light">
+                                        <label for="exampleInputTextarea" class="form-label bg-light">Body</label>
+                                        <textarea class="form-control bg-light" id="body" rows="3"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary ">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="Tokyo" class="tabcontent">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-6 put-data ">
+                                <div class="message-up mt-3 alert alert-success" style="display: none;"></div>
+                                <form id="update">
+                                    <h2 class="text-success">PUT REQUEST</h2>
+                                    <div class="mb-3 bg-light">
+                                        <label for="exampleInputEmail1" class="form-label bg-light">Id</label>
+                                        <input type="number" class="form-control bg-light" id="postId"
+                                            aria-describedby="emailHelp">
+                                        <label for="exampleInputEmail1" class="form-label bg-light">Title</label>
+                                        <input type="text" class="form-control bg-light" id="title-update"
+                                            aria-describedby="emailHelp" value="">
+
+                                    </div>
+                                    <div class="mb-3 bg-light">
+                                        <label for="exampleInputTextarea" class="form-label bg-light">Body</label>
+                                        <textarea class="form-control bg-light" id="body-update" rows="3"
+                                            value=""></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary ">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="patch" class="tabcontent">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-6 put-data ">
+                                <div class="message-u mt-3 alert alert-success" style="display: none;"></div>
+                                <form id="update_one">
+                                    <h2 class="text-success">PATCH REQUEST</h2>
+                                    <div class="mb-3 bg-light">
+                                        <label for="exampleInputEmail1" class="form-label bg-light">Id</label>
+                                        <input type="number" class="form-control bg-light" id="postId-p"
+                                            aria-describedby="emailHelp">
+                                    </div>
+                                    <div class="mb-3 bg-light">
+                                        <label for="exampleInputTextarea" class="form-label bg-light">Body</label>
+                                        <textarea class="form-control bg-light" id="body-p" rows="3"
+                                            value=""></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary ">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="delete" class="tabcontent">
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-6 put-data ">
+                                <div class="message-d mt-3 alert alert-success" style="display: none;"></div>
+                                <form id="delete">
+                                    <h2 class="text-success">DELETE REQUEST</h2>
+                                    <div class="mb-3 bg-light">
+                                        <label for="exampleInputEmail1" class="form-label bg-light">Id</label>
+                                        <input type="number" class="form-control bg-light" id="postId-d"
+                                            aria-describedby="emailHelp" value="">
+                                    </div>
+                                    <button type="submit" class="btn btn-primary ">Submit</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="demo"></div>
+
+    <script>
+        // var form = document.getElementById("form");
+
+        // form.addEventListener('submit', function (e) {
+        //     e.preventDefault();
+
+        //     // Get the values from the form fields
+        //     var title = document.getElementById('title').value;
+        //     var body = document.getElementById('body').value;
+
+        //     // Make a POST request using fetch
+        //     fetch('https://jsonplaceholder.typicode.com/posts', {
+        //         method: 'POST',
+        //         body: JSON.stringify({
+        //             title: title,
+        //             body: body,
+
+        //         }),
+        //         headers: {
+        //             'Content-type': 'application/json; charset=UTF-8'
+        //         }
+        //     })
+        //         .then(response => response.json())
+        //         .then(data => {
+        //             console.log(data);
+        //             alert('Post created successfully');
+        //         })
+        //         .catch(error => {
+        //             console.error('Error:', error);
+        //             alert('An error occurred while creating the post');
+        //         });
+        // });
+
+        // fetch('https://jsonplaceholder.typicode.com/posts/3', {
+        //     method: 'PUT',
+        //     body: JSON.stringify({
+        //         id: 3,
+        //         title: 'pritam',
+        //         body: 'baetgrtr',
+        //         userId: 3,
+        //     }),
+        //     headers: {
+        //         'Content-type': 'application/json; charset=UTF-8',
+        //     },
+        // })
+        //     .then((response) => response.json())
+        //     .then((json) => console.log(json));
+
+        $(document).ready(function () {
+
+            $('#delete').submit(function (e) {
+                e.preventDefault();
+
+                var postId = $("#postId-d").val();
+                $.ajax({
+                    url: "https://jsonplaceholder.typicode.com/posts/" + postId,
+                    type: "DELETE",
+                    // contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify({
+                        id: postId,
+                    }),
+                    success: function (data) {
+                        $('.message-d')
+                            .html('delete successful: ' + JSON.stringify(data))
+                            .removeClass('alert-danger')
+                            .addClass('alert-success')
+                            .show();
+                    },
+                    error: function (error) {
+                        $('.message-d')
+                            .html('Error: ' + JSON.stringify(error))
+                            .removeClass('alert-success')
+                            .addClass('alert-danger')
+                            .show();
+                    },
+                });
+            });
+        });
+
+        $(document).ready(function () {
+
+            $('#update_one').submit(function (e) {
+                e.preventDefault();
+
+                var postId = $("#postId-p").val();
+                var body = $('#body-p').val();
+                $.ajax({
+                    url: "https://jsonplaceholder.typicode.com/posts/" + postId,
+                    type: "PATCH",
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify({
+                        id: postId,
+                        body: body,
+                    }),
+                    success: function (data) {
+                        $('.message-u')
+                            .html('Update successful: ' + JSON.stringify(data))
+                            .removeClass('alert-danger')
+                            .addClass('alert-success')
+                            .show();
+                    },
+                    error: function (error) {
+                        $('.message-d')
+                            .html('Error: ' + JSON.stringify(error))
+                            .removeClass('alert-success')
+                            .addClass('alert-danger')
+                            .show();
+                    },
+                });
+            });
+        });
+
+        $(document).ready(function () {
+
+            $('#update').submit(function (e) {
+                e.preventDefault();
+
+                var postId = $("#postId").val();
+                var title = $('#title-update').val();
+                var body = $('#body-update').val();
+                $.ajax({
+                    url: "https://jsonplaceholder.typicode.com/posts/" + postId,
+                    type: "PUT",
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify({
+                        id: postId,
+                        title: title,
+                        body: body,
+                    }),
+                    success: function (data) {
+                        $('.message-up')
+                            .html('Update successful: ' + JSON.stringify(data))
+                            .removeClass('alert-danger')
+                            .addClass('alert-success')
+                            .show();
+                    },
+                    error: function (error) {
+                        $('.message-up')
+                            .html('Error: ' + JSON.stringify(error))
+                            .removeClass('alert-success')
+                            .addClass('alert-danger')
+                            .show();
+                    },
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $('#form').submit(function (e) {
+                e.preventDefault();
+
+                var title = $('#title').val();
+                var body = $('#body').val();
+
+                $.ajax({
+                    url: 'https://jsonplaceholder.typicode.com/posts',
+                    type: "POST",
+                    contentType: 'application/json; charset=UTF-8',
+                    data: JSON.stringify({
+                        title: title,
+                        body: body,
+                    }),
+                    success: function (data) {
+                        $('.message-post')
+                            .html('Post successful: ' + JSON.stringify(data))
+                            .removeClass('alert-danger')
+                            .addClass('alert-success')
+                            .show();
+                    },
+                    error: function (error) {
+                        $('.message-post')
+                            .html('Error: ' + JSON.stringify(error))
+                            .removeClass('alert-success')
+                            .addClass('alert-danger')
+                            .show();
+                    },
+                });
+            });
+        });
+
+        $(document).ready(function () {
+            $.ajax({
+                url: "https://jsonplaceholder.typicode.com/posts/1",
+                type: "GET",
+                success: function (data) {
+                    // $.each(data, function (req, res) {
+                    //     $('#data').append("<tr><td>" + res.id + "</td><td>" + res.title + "</td><td>" + res.body + "</td></tr>");
+                    // })
+                    $('#data').append("<tr><td>" + data.id+ "</td><td>" + data.title + "</td><td>" + data.body + "</td></tr>");
+                }
+            });
+        });
+
+
+
+        function openCity(evt, cityName) {
+            var i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].className = tablinks[i].className.replace(" active", "");
+            }
+            document.getElementById(cityName).style.display = "block";
+            evt.currentTarget.className += " active";
+        }
+    </script>
+
+
+
+
+</body>
+
+</html>
